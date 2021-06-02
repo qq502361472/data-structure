@@ -20,6 +20,7 @@ public class ArrayQueueMain {
         System.out.println("弹出：" + queue.pop());
         System.out.println("弹出：" + queue.pop());
         System.out.println("弹出：" + queue.pop());
+        queue.show();
         queue.add(6);
         queue.add(7);
         queue.add(8);
@@ -66,6 +67,7 @@ public class ArrayQueueMain {
         }
 
         public void show() {
+            System.out.println("size:"+size());
             for (int i = tailIndex; i < tailIndex + size(); i++) {
                 int tmp = i % maxSize;
                 System.out.printf("--------------index[%d],value[%d]", tmp, arr[tmp]);
