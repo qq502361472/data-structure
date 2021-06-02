@@ -1,5 +1,8 @@
 package com.hjrpc.array;
 
+/**
+ * 稀疏数组
+ */
 public class SparseArray {
     static int col = 11;
     static int row = 11;
