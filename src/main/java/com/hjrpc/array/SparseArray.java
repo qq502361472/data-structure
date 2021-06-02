@@ -7,11 +7,33 @@ public class SparseArray {
     public static void main(String[] args) {
         int[][] arr = getArrayData(row, col);
         show(arr);
-
+        System.out.println("分割线————————————————————————");
         int[][] sparseArray = generateSparseArray(arr);
         show(sparseArray);
+
+        System.out.println("分割线————————————————————————");
+        int[][] arr2 = generateNomalArray(sparseArray);
+        show(arr2);
     }
 
+    /**
+     * 还原数组
+     * @param sparseArray
+     * @return
+     */
+    private static int[][] generateNomalArray(int[][] sparseArray) {
+        int[][] res = new int[sparseArray[0][0]][sparseArray[0][1]];
+        for (int i = 1; i <= sparseArray[0][2]; i++) {
+            res[sparseArray[i][0]][sparseArray[i][1]] = sparseArray[i][2];
+        }
+        return res;
+    }
+
+    /**
+     * 生成稀疏数组
+     * @param arr
+     * @return
+     */
     private static int[][] generateSparseArray(int[][] arr) {
         int count = 0;
         for (int[] tempArray : arr) {
