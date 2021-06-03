@@ -3,7 +3,7 @@ package com.hjrpc.queue;
 /**
  * 数组实现环形队列
  */
-public class ArrayQueueMain {
+public class CircleArrayQueueMain {
     public static void main(String[] args) {
         ArrayQueue queue = new ArrayQueue(3);
         queue.add(1);
