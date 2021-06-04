@@ -2,12 +2,9 @@ package com.hjrpc.linked;
 
 import java.util.Stack;
 
-/**
- * 单链表的增删改查
- */
-public class LinkedListMain {
+public class DoubleLinkedListMain {
     public static void main(String[] args) {
-        LinkedList linkedList = new LinkedList();
+        DoubleLinkedList linkedList = new DoubleLinkedList();
         Node node1 = new Node(1, "赵1");
         Node node2 = new Node(2, "王2");
         Node node3 = new Node(3, "张3");
@@ -53,17 +50,17 @@ public class LinkedListMain {
         linkedList.reversal();
         linkedList.show();
 
-        LinkedList linkedList1 = new LinkedList();
+        DoubleLinkedList linkedList1 = new DoubleLinkedList();
         linkedList1.add(new Node(1, "2"));
         linkedList1.add(new Node(3, "2"));
         linkedList1.add(new Node(5, "2"));
         linkedList1.add(new Node(10, "2"));
-        LinkedList linkedList2 = new LinkedList();
+        DoubleLinkedList linkedList2 = new DoubleLinkedList();
         linkedList2.add(new Node(2, "2"));
         linkedList2.add(new Node(4, "2"));
         linkedList2.add(new Node(8, "2"));
         linkedList2.add(new Node(9, "2"));
-        LinkedList list = merge(linkedList1, linkedList2);
+        DoubleLinkedList list = merge(linkedList1, linkedList2);
         list.show();
     }
 
@@ -71,9 +68,9 @@ public class LinkedListMain {
         return new Node();
     }
 
-    private static LinkedList merge(LinkedList linkedList1, LinkedList linkedList2) {
-        Node node1 = linkedList1.head.next;
-        Node node2 = linkedList2.head.next;
+    private static DoubleLinkedList merge(DoubleLinkedList doubleLinkedList1, DoubleLinkedList doubleLinkedList2) {
+        Node node1 = doubleLinkedList1.head.next;
+        Node node2 = doubleLinkedList2.head.next;
 
         Node tempNode = generateEmptyNode();
         Node cur = tempNode;
@@ -91,30 +88,30 @@ public class LinkedListMain {
             }
             cur = cur.next;
         }
-//        cur.next = null;
-        return new LinkedList(tempNode);
+        return new DoubleLinkedList(tempNode);
     }
 
-    static class LinkedList {
+    static class DoubleLinkedList {
         Node head;
 
-        public LinkedList() {
+        public DoubleLinkedList() {
             this.head = generateEmptyNode();
         }
 
-        public LinkedList(Node node) {
+        public DoubleLinkedList(Node node) {
             this.head = node;
         }
 
-        public void delete(int id){
-            if(isEmpty()){
+        public void delete(int id) {
+            if (isEmpty()) {
                 return;
             }
-            Node cur = head;
-            while (cur.next.id!=id){
+            Node cur = head.next;
+            while (cur.id != id) {
                 cur = cur.next;
             }
-            cur.next = cur.next.next;
+            cur.next.pre = cur.pre;
+            cur.pre.next = cur.next;
         }
 
         //逆序打印,使用栈
@@ -130,21 +127,7 @@ public class LinkedListMain {
                 System.out.println(stack.pop());
             }
         }
-
-        //反转
-        public void reversal() {
-            Node temp = generateEmptyNode();
-            Node cur = head.next;
-            while (cur != null) {
-                Node next = cur.next;
-                cur.next = temp.next;
-                temp.next = cur;
-                cur = next;
-            }
-            head = temp;
-        }
-
-
+        
         /**
          * 获取倒数第{index}个节点node
          *
@@ -191,6 +174,9 @@ public class LinkedListMain {
             while (true) {
                 if (cur.next == null || node.id < cur.next.id) {
                     node.next = cur.next;
+                    if(node.next!=null)
+                        node.next.pre = node;
+                    node.pre = cur;
                     cur.next = node;
                     break;
                 } else if (node.id == cur.next.id) {
@@ -200,6 +186,23 @@ public class LinkedListMain {
                     cur = cur.next;
                 }
             }
+        }
+
+        //反转
+        public void reversal() {
+            Node temp = generateEmptyNode();
+            Node cur = head.next;
+            while (cur != null) {
+                Node next = cur.next;
+                if(temp.next!=null) {
+                    temp.next.pre = cur;
+                }
+                cur.next = temp.next;
+                cur.pre = temp;
+                temp.next = cur;
+                cur = next;
+            }
+            head = temp;
         }
 
         public void add(Node node) {
@@ -251,6 +254,7 @@ public class LinkedListMain {
         int id;
         String name;
         Node next;
+        Node pre;
 
         public Node() {
         }
@@ -259,6 +263,7 @@ public class LinkedListMain {
             this.id = id;
             this.name = name;
             this.next = null;
+            this.pre = null;
         }
 
         @Override
