@@ -96,7 +96,7 @@ public class LinkedListMain {
         return new LinkedList(tempNode);
     }
 
-    static class LinkedList {
+    public static class LinkedList {
         Node head;
 
         public LinkedList() {
@@ -107,12 +107,12 @@ public class LinkedListMain {
             this.head = node;
         }
 
-        public void delete(int id){
-            if(isEmpty()){
+        public void delete(int id) {
+            if (isEmpty()) {
                 return;
             }
             Node cur = head;
-            while (cur.next.id!=id){
+            while (cur.next.id != id) {
                 cur = cur.next;
             }
             cur.next = cur.next.next;
@@ -246,12 +246,25 @@ public class LinkedListMain {
             System.out.println("linked size is :" + count);
             return count;
         }
+
+        public Node pop() {
+            if (isEmpty()) {
+                return null;
+            }
+            Node help = head;
+            while (help.next.next != null) {
+                help = help.next;
+            }
+            Node res = help.next;
+            help.next = null;
+            return res;
+        }
     }
 
-    static class Node {
-        int id;
-        String name;
-        Node next;
+    public static class Node {
+        public int id;
+        public String name;
+        public Node next;
 
         public Node() {
         }
@@ -260,6 +273,10 @@ public class LinkedListMain {
             this.id = id;
             this.name = name;
             this.next = null;
+        }
+
+        public Node(int id) {
+            this.id = id;
         }
 
         @Override
