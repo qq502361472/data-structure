@@ -83,13 +83,13 @@ public class MiddleExpression {
         return res;
     }
 
-    private static boolean isPriorTo(char ch1, char ch2) {
+    public static boolean isPriorTo(char ch1, char ch2) {
         int level1 = getLevel(ch1);
         int level2 = getLevel(ch2);
         return level1 > level2;
     }
 
-    private static int getLevel(char ch) {
+    public static int getLevel(char ch) {
         int res = -1;
         switch (ch) {
             case '+':
