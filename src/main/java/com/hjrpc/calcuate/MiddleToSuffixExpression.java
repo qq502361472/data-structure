@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * 中缀表达式转后缀表达式
+ */
 public class MiddleToSuffixExpression {
 
     //10+((2+3)*4)-5 ==> 10 2 3 + 4 * + 5 -
 
     public static void main(String[] args) {
         String expression = "10+((2+3)*4)-5";
-        List<String> middleExpressionList = parse(expression);
+        List<String> middleExpressionList = parse(expression.trim());
         List<String> suffixExpressionList = toSuffixExpression(middleExpressionList);
         SuffixExpression.calculateSuffix(suffixExpressionList);
     }
