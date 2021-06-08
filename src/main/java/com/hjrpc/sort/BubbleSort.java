@@ -7,12 +7,16 @@ public class BubbleSort {
         ArrayDataUtil.show(simpleArray);
 
         long l = System.currentTimeMillis();
-        bubbleSort(ArrayDataUtil.getAdvanceArray(80000));
+        int[] advanceArray1 = ArrayDataUtil.getAdvanceArray(80000);
+        bubbleSort(advanceArray1);
         System.out.println("冒泡排序,共耗时:" + (System.currentTimeMillis() - l));
+        ArrayDataUtil.show(advanceArray1);
 
         long l2 = System.currentTimeMillis();
-        bubbleSortOptimized(ArrayDataUtil.getAdvanceArray(80000));
+        int[] advanceArray2 = ArrayDataUtil.getAdvanceArray(80000);
+        bubbleSortOptimized(advanceArray2);
         System.out.println("冒泡排序优化的,共耗时:" + (System.currentTimeMillis() - l2));
+        ArrayDataUtil.show(advanceArray2);
 
     }
 

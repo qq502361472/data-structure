@@ -8,16 +8,28 @@ public class ShellSort {
     public static void main(String[] args) {
 
         int[] simpleArray = ArrayDataUtil.getSimpleArray(10);
-        shellSortSwap(simpleArray);
+        ArrayDataUtil.show(simpleArray);
+//        shellSortSwap(simpleArray);
+        shellSortMove(simpleArray);
         ArrayDataUtil.show(simpleArray);
 
         long l = System.currentTimeMillis();
-        shellSortSwap(ArrayDataUtil.getAdvanceArray(800000));
+        int[] advanceArray1 = ArrayDataUtil.getAdvanceArray(80000);
+        shellSortSwap(advanceArray1);
         System.out.println("希尔排序交换,共耗时:" + (System.currentTimeMillis() - l));
+        ArrayDataUtil.show(advanceArray1);
 
         long l2 = System.currentTimeMillis();
-        shellSortMove(ArrayDataUtil.getAdvanceArray(800000));
+        int[] advanceArray2 = ArrayDataUtil.getAdvanceArray(80000);
+        shellSortMove(advanceArray2);
         System.out.println("希尔排序移动,共耗时:" + (System.currentTimeMillis() - l2));
+        ArrayDataUtil.show(advanceArray2);
+
+        long l3 = System.currentTimeMillis();
+        int[] advanceArray3 = ArrayDataUtil.getAdvanceArray(80000);
+        shellSortMove2(advanceArray3);
+        System.out.println("希尔排序移动,共耗时:" + (System.currentTimeMillis() - l3));
+        ArrayDataUtil.show(advanceArray3);
 
     }
 
@@ -39,12 +51,28 @@ public class ShellSort {
                 int j = i;
                 int temp = arr[j];
                 while (j > gap - 1 && temp < arr[j - gap]) {
-                    arr[j - gap] = arr[j];
+                    arr[j] = arr[j - gap];
                     j -= gap;
                 }
 //                if (i != j) { 此处判断优化极小,可以忽略
                 arr[j] = temp;
 //                }
+            }
+        }
+    }
+
+    private static void shellSortMove2(int[] arr) {
+        for (int gap = arr.length / 2; gap != 0; gap /= 2) {
+            for (int i = gap; i < arr.length; i++) {
+                int j = i;
+                int temp = arr[j];
+                while (j > gap - 1 && temp < arr[j - gap]) {
+                    arr[j] = arr[j - gap];
+                    j -= gap;
+                }
+                if (i != j) { //此处判断优化极小,可以忽略
+                    arr[j] = temp;
+                }
             }
         }
     }

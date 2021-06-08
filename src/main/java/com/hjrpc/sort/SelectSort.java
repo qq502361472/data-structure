@@ -10,8 +10,10 @@ public class SelectSort {
         ArrayDataUtil.show(simpleArray);
 
         long l = System.currentTimeMillis();
-        selectSort(ArrayDataUtil.getAdvanceArray(80000));
+        int[] advanceArray = ArrayDataUtil.getAdvanceArray(80000);
+        selectSort(advanceArray);
         System.out.println("选择排序,共耗时:" + (System.currentTimeMillis() - l));
+        ArrayDataUtil.show(advanceArray);
     }
 
     private static void selectSort(int[] arr) {

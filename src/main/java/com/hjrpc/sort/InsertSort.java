@@ -9,17 +9,23 @@ public class InsertSort {
         ArrayDataUtil.show(simpleArray);
 
         long l = System.currentTimeMillis();
-        insertSort(ArrayDataUtil.getAdvanceArray(80000));
+        int[] advanceArray1 = ArrayDataUtil.getAdvanceArray(80000);
+        insertSort(advanceArray1);
         System.out.println("插入排序,共耗时:" + (System.currentTimeMillis() - l));
+        ArrayDataUtil.show(advanceArray1);
 
         long l2 = System.currentTimeMillis();
-        insertSortOptimized(ArrayDataUtil.getAdvanceArray(80000));
+        int[] advanceArray2 = ArrayDataUtil.getAdvanceArray(80000);
+        insertSortOptimized(advanceArray2);
         System.out.println("插入排序优化的,共耗时:" + (System.currentTimeMillis() - l2));
+        ArrayDataUtil.show(advanceArray2);
 
         long l3 = System.currentTimeMillis();
+        int[] advanceArray3 = ArrayDataUtil.getAdvanceArray(80000);
         //这个优化反而慢了
-        insertSortOptimized2(ArrayDataUtil.getAdvanceArray(80000));
+        insertSortOptimized2(advanceArray3);
         System.out.println("插入排序优化2的,共耗时:" + (System.currentTimeMillis() - l3));
+        ArrayDataUtil.show(advanceArray3);
     }
 
     /**
