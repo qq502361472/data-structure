@@ -1,6 +1,10 @@
 package com.hjrpc.sort;
 
+import java.util.Random;
+
 public class QuickSort {
+    static Random random = new Random();
+
     public static void main(String[] args) {
         int[] simpleArray = ArrayDataUtil.getSimpleArray(10);
 
@@ -10,13 +14,13 @@ public class QuickSort {
         ArrayDataUtil.show(simpleArray);
 
         long l = System.currentTimeMillis();
-        int[] advanceArray1 = ArrayDataUtil.getAdvanceArray(80000);
+        int[] advanceArray1 = ArrayDataUtil.getAdvanceArray(8000000);
         quickSortFirst(advanceArray1, 0, advanceArray1.length - 1);
         System.out.println("快速排序交换,共耗时:" + (System.currentTimeMillis() - l));
         ArrayDataUtil.show(advanceArray1);
 
         long l2 = System.currentTimeMillis();
-        int[] advanceArray2 = ArrayDataUtil.getAdvanceArray(80000);
+        int[] advanceArray2 = ArrayDataUtil.getAdvanceArray(8000000);
         partitionSortOptimzed(advanceArray2, 0, advanceArray2.length - 1);
         System.out.println("快速排序优化版本,共耗时:" + (System.currentTimeMillis() - l2));
         ArrayDataUtil.show(advanceArray2);
@@ -31,6 +35,7 @@ public class QuickSort {
      */
     private static void quickSortFirst(int[] arr, int start, int end) {
         if (start < end) {
+            ArrayDataUtil.swap(arr, start, random.nextInt(end - start + 1) + start);
             int number = partitionSort(arr, start, end);
             //左分区，继续使用快速排序
             quickSortFirst(arr, start, number - 1);
@@ -41,7 +46,7 @@ public class QuickSort {
 
     private static void quickSortOptimized(int[] arr, int start, int end) {
         if (start < end) {
-//            ArrayDataUtil.swap(arr,start,new Random().nextInt(end - start + 1) + start);
+            ArrayDataUtil.swap(arr, start, random.nextInt(end - start + 1) + start);
             int number = partitionSortOptimzed(arr, start, end);
             //左分区，继续使用快速排序
             quickSortOptimized(arr, start, number - 1);
@@ -57,12 +62,12 @@ public class QuickSort {
         //如果start不等于end继续循环
         while (start != end) {
             //1.移动右边，如果当前值大于或者等于基准值，不需要交换，继续移动下标
-            while (arr[end] >= pivotValue && start < end) {
+            while (arr[end] >= pivotValue && start != end) {
                 end--;
             }
 
             //中心点所在位置，中心值已使用变量记录
-            while (arr[start] <= pivotValue && start < end) {
+            while (arr[start] <= pivotValue && start != end) {
                 start++;
             }
             ArrayDataUtil.swap(arr, start, end);
