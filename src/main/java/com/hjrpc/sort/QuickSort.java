@@ -44,7 +44,7 @@ public class QuickSort {
         }
     }
 
-    private static void quickSortOptimized(int[] arr, int start, int end) {
+    public static void quickSortOptimized(int[] arr, int start, int end) {
         if (start < end) {
             ArrayDataUtil.swap(arr, start, random.nextInt(end - start + 1) + start);
             int number = partitionSortOptimzed(arr, start, end);
