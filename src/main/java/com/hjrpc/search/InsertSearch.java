@@ -4,9 +4,10 @@ import com.hjrpc.sort.ArrayDataUtil;
 import com.hjrpc.sort.QuickSort;
 
 /**
- * 二分查找
+ * 插入查找
  */
 public class InsertSearch {
+    public static int times = 0;
 
     public static void main(String[] args) {
         int[] arr = {-12, -7, -3, -2, 1, 3, 5, 9, 12, 16};
@@ -20,14 +21,17 @@ public class InsertSearch {
         System.out.println("binarySearchMain:"+BinarySearch.binarySearchMain(advanceArray, 10086));
     }
 
-    private static int insertSearchMain(int[] arr, int val) {
+    public static int insertSearchMain(int[] arr, int val) {
+        times = 0;
         int start = 0;
         int end = arr.length - 1;
-        return insertSearch(arr, start, end, val);
+        int res = insertSearch(arr, start, end, val);
+        System.out.printf("insertSearchMain:times[%d],index[%d]\t\n", times, res);
+        return res;
     }
 
     private static int insertSearch(int[] arr, int start, int end, int val) {
-        System.out.println("search times");
+        times++;
         if (val < arr[start] || val > arr[end]) {
             return -1;
         }
