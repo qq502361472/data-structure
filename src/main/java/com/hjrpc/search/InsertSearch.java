@@ -3,6 +3,9 @@ package com.hjrpc.search;
 import com.hjrpc.sort.ArrayDataUtil;
 import com.hjrpc.sort.QuickSort;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 插入查找
  */
@@ -11,38 +14,51 @@ public class InsertSearch {
 
     public static void main(String[] args) {
         int[] arr = {-12, -7, -3, -2, 1, 3, 5, 9, 12, 16};
-//        System.out.println(insertSearchMain(arr, -12));
+//        insertSearchMain(arr, -12);
 
         int[] advanceArray = ArrayDataUtil.getAdvanceArray(80000);
-        QuickSort.quickSortOptimized(advanceArray,0,advanceArray.length-1);
-        System.out.println("insertSearchMain:"+insertSearchMain(advanceArray, 10086));
-        System.out.println("----------------------------------------");
+        QuickSort.quickSortOptimized(advanceArray, 0, advanceArray.length - 1);
 
-        System.out.println("binarySearchMain:"+BinarySearch.binarySearchMain(advanceArray, 10086));
+        insertSearchMain(advanceArray, 10086);
+        BinarySearch.binarySearchMain(advanceArray, 10086);
     }
 
-    public static int insertSearchMain(int[] arr, int val) {
+    public static void insertSearchMain(int[] arr, int val) {
         times = 0;
         int start = 0;
         int end = arr.length - 1;
-        int res = insertSearch(arr, start, end, val);
-        System.out.printf("insertSearchMain:times[%d],index[%d]\t\n", times, res);
-        return res;
+        List<Integer> res = new ArrayList<>();
+        insertSearch(arr, start, end, val, res);
+        System.out.printf("insertSearchMain:times[%d],index" + res.toString() + "\t\n", times);
     }
 
-    private static int insertSearch(int[] arr, int start, int end, int val) {
+    private static void insertSearch(int[] arr, int start, int end, int val, List<Integer> res) {
         times++;
         if (val < arr[start] || val > arr[end]) {
-            return -1;
+            return;
         }
         //插入排序
-        int middle = start + (int)((Double.valueOf(val - arr[start]) / Double.valueOf(arr[end] - arr[start])) * (end - start));
+        int middle = start + (int) ((Double.valueOf(val - arr[start]) / Double.valueOf(arr[end] - arr[start])) * (end - start));
         if (arr[middle] == val) {
-            return middle;
+            searchSameValueIndex(arr, val, res, middle);
+            return;
         }
         if (arr[middle] > val) {
-            return insertSearch(arr, start, middle - 1, val);
+            insertSearch(arr, start, middle - 1, val, res);
         }
-        return insertSearch(arr, middle + 1, end, val);
+        insertSearch(arr, middle + 1, end, val, res);
+    }
+
+    public static void searchSameValueIndex(int[] arr, int val, List<Integer> res, int middle) {
+        res.add(middle);
+        int temp = middle - 1;
+        while (temp >= 0 && arr[temp] == val) {
+            res.add(temp--);
+        }
+
+        temp = middle + 1;
+        while (temp >= 0 && arr[temp] == val) {
+            res.add(temp++);
+        }
     }
 }

@@ -3,10 +3,11 @@ package com.hjrpc.search;
 import com.hjrpc.sort.ArrayDataUtil;
 import com.hjrpc.sort.QuickSort;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class FibonacciSearch {
-    private static int maxSize = 10000;
     public static int times = 0;
 
     public static void main(String[] args) {
@@ -22,7 +23,7 @@ public class FibonacciSearch {
         System.out.println("----------------------------------------");
     }
 
-    public static int fibonacciSearchMain(int[] arr, int val) {
+    public static void fibonacciSearchMain(int[] arr, int val) {
         //根据数组长度获取斐波那契数
         int[] f = getFib(arr.length);
 //        System.out.println("获取到的斐波那契数组:" + Arrays.toString(f));
@@ -31,12 +32,13 @@ public class FibonacciSearch {
 //        System.out.println("-------------原数组:\t" + Arrays.toString(arr));
 //        System.out.println("获取到的方便查询的数组:\t" + Arrays.toString(tempArr));
         times = 0;
-        int res = fibonacciSearch(f, tempArr, val, arr.length - 1);
-        System.out.printf("fibonacciSearchMain:times[%d],index[%d] \n", times, res);
-        return res;
+        List<Integer> res = new ArrayList<>();
+        fibonacciSearch(f, tempArr, val, arr.length - 1, res);
+        System.out.printf("fibonacciSearchMain:times[%d],index" + res.toString() + "\t\n", times);
+
     }
 
-    private static int fibonacciSearch(int[] f, int[] tempArr, int val, int len) {
+    private static void fibonacciSearch(int[] f, int[] tempArr, int val, int len, List<Integer> res) {
         int start = 0;
         int end = tempArr.length - 1;
         int k = f.length - 1;//最后一个元素13的下标,13是tempArr的长度
@@ -46,9 +48,19 @@ public class FibonacciSearch {
             if (val == tempArr[mid]) {
                 //后面一部分元素是我们填充的
                 if (mid > len) {
-                    return len;
+                    mid = len;
                 }
-                return mid;
+                res.add(mid);
+                int temp = mid - 1;
+                while (temp >= 0 && tempArr[temp] == val) {
+                    res.add(temp--);
+                }
+
+                temp = mid + 1;
+                while (temp >= 0 && tempArr[temp] == val && temp <= len) {
+                    res.add(temp++);
+                }
+                return;
             } else if (val > tempArr[mid]) {
                 start = mid + 1;
                 k -= 2;
@@ -57,7 +69,6 @@ public class FibonacciSearch {
                 k -= 1;
             }
         }
-        return -1;
     }
 
     private static int[] getTempArr(int[] arr, int len) {
