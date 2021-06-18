@@ -3,7 +3,7 @@ package com.hjrpc.tree;
 import java.util.Arrays;
 
 /**
- * 数组实现有序二叉树的前序,中序,后续遍历
+ * 数组实现顺序存储二叉树的前序,中序,后续遍历
  */
 public class OrderedBinaryTreeArray {
     public static void main(String[] args) {
