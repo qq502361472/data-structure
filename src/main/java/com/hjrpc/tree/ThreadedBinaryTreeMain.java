@@ -131,8 +131,6 @@ public class ThreadedBinaryTreeMain {
                 pre.rightType = 1;
             }
             pre = node;
-
-
         }
 
         public ThreadedBinaryTree(Node root) {
