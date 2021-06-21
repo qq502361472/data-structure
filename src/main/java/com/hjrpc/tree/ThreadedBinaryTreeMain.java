@@ -29,15 +29,17 @@ public class ThreadedBinaryTreeMain {
 //        tree.infixThreadedNode(root);//8-3-10-1-14-6
         //后续遍历线索化验证
         tree.postThreadedNode(root);// 8-10-3-14-6-1
-        System.out.println(node8.left);
-        System.out.println(node8.right);
-        System.out.println(node10.left);
-        System.out.println(node10.right);
-        System.out.println(node14.left);
-        System.out.println(node14.right);
-        System.out.println(node6.right);
-
+//        System.out.println(node8.left);
+//        System.out.println(node8.right);
+//        System.out.println(node10.left);
+//        System.out.println(node10.right);
+//        System.out.println(node14.left);
+//        System.out.println(node14.right);
+//        System.out.println(node6.right);
         System.out.println("----------------");
+//        tree.preThreadedOrder(root);
+//        tree.infixThreadedOrder(root);
+        tree.postThreadedOrder(root);
     }
 
     static class ThreadedBinaryTree {
@@ -45,16 +47,55 @@ public class ThreadedBinaryTreeMain {
         Node root;
         Node pre;
 
-        //按照线索化遍历
-        public void threadedOrder(Node node) {
-            //找到线索化二叉树的头,头的左边一定是空的,且类型是0
-            while (node.leftType == 0) {
-                node = node.left;
-            }
-            System.out.println(" " + node + " ");
-            while (node.rightType == 1) {
 
+        //      1
+        //  3       6
+        //8  10   14
+        //按照线索化遍历
+        public void preThreadedOrder(Node node) {
+            while (node != null) {
+                System.out.println(" " + node + " ");
+                //找到线索化二叉树的头,从root开始，头的左边一定是空的,且类型是0
+                while (node.leftType == 0) {
+                    node = node.left;
+                    System.out.println(node);
+                }
+                while (node.rightType == 1) {
+                    node = node.right;
+                    System.out.println(node);
+                }
+                node = node.right;
             }
+        }
+
+        //按照线索化遍历
+        // 8-3-10-1-14-6
+        //      1
+        //  3       6
+        //8  10   14
+        public void infixThreadedOrder(Node node) {
+            while (node != null) {
+                //找到线索化二叉树的头,从root开始，头的左边一定是空的,且类型是0
+                while (node.leftType == 0) {
+                    node = node.left;
+                }
+                System.out.println(" " + node + " ");
+                while (node.rightType == 1) {
+                    node = node.right;
+                    System.out.println(node);
+                }
+                node = node.right;
+            }
+        }
+
+        //按照线索化遍历 不使用递归太复杂，Node需要保存父节点
+        // 8-10-3-14-6-1
+        //      1
+        //  3       6
+        //8  10   14
+        public void postThreadedOrder(Node node) {
+            //使用递归遍历
+            node.postThreadedOrder();
         }
 
         //      1
@@ -168,6 +209,17 @@ public class ThreadedBinaryTreeMain {
             return "Node{" +
                     "id=" + id +
                     '}';
+        }
+
+        //线索化后续遍历
+        public void postThreadedOrder() {
+            if (left != null && leftType == 0) {
+                left.postThreadedOrder();
+            }
+            if (right != null && rightType == 0) {
+                right.postThreadedOrder();
+            }
+            System.out.println(" " + id + " ");
         }
     }
 }
