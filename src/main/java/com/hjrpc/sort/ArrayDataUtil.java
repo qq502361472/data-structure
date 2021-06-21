@@ -20,7 +20,7 @@ public class ArrayDataUtil {
     public static int[] getAdvanceArray(int length) {
         int[] res = new int[length];
         for (int i = 0; i < length; i++) {
-            res[i] = (int) (random.nextDouble() * 80000);
+            res[i] = (int) (random.nextDouble() * 8000000);
         }
         return res;
     }

@@ -33,7 +33,7 @@ public class QuickSort {
      * @param start
      * @param end
      */
-    private static void quickSortFirst(int[] arr, int start, int end) {
+    public static void quickSortFirst(int[] arr, int start, int end) {
         if (start < end) {
             ArrayDataUtil.swap(arr, start, random.nextInt(end - start + 1) + start);
             int number = partitionSort(arr, start, end);
@@ -55,7 +55,7 @@ public class QuickSort {
         }
     }
 
-    private static int partitionSortOptimzed(int[] arr, int start, int end) {
+    public static int partitionSortOptimzed(int[] arr, int start, int end) {
         int pivotIndex = start;
         //中心点的值，设置第start个元素是基准值
         int pivotValue = arr[start];
