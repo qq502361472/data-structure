@@ -45,6 +45,18 @@ public class ThreadedBinaryTreeMain {
         Node root;
         Node pre;
 
+        //按照线索化遍历
+        public void threadedOrder(Node node) {
+            //找到线索化二叉树的头,头的左边一定是空的,且类型是0
+            while (node.leftType == 0) {
+                node = node.left;
+            }
+            System.out.println(" " + node + " ");
+            while (node.rightType == 1) {
+
+            }
+        }
+
         //      1
         //  3       6
         //8  10   14
@@ -54,7 +66,7 @@ public class ThreadedBinaryTreeMain {
                 return;
             }
 
-            if (node.left == null ) {//如果左子节点不存在
+            if (node.left == null) {//如果左子节点不存在
                 node.left = pre;
                 node.leftType = 1;
             }
