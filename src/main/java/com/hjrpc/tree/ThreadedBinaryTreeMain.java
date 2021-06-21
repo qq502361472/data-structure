@@ -6,27 +6,134 @@ package com.hjrpc.tree;
 public class ThreadedBinaryTreeMain {
 
     public static void main(String[] args) {
+        Node node1 = new Node(1);
+        Node node3 = new Node(3);
+        Node node6 = new Node(6);
+        Node node8 = new Node(8);
+        Node node10 = new Node(10);
+        Node node14 = new Node(14);
+        Node root = node1;
+        ThreadedBinaryTree tree = new ThreadedBinaryTree(root);
+        root.left = node3;
+        root.right = node6;
+        node3.left = node8;
+        node3.right = node10;
+        node6.left = node14;
         //      1
         //  3       6
         //8  10   14
-        Node node1 = new Node(1);
-        Node node2 = new Node(3);
-        Node node3 = new Node(6);
-        Node node4 = new Node(8);
-        Node node5 = new Node(10);
-        Node node6 = new Node(14);
-        Node root = node1;
-        ThreadedBinaryTree tree = new ThreadedBinaryTree(root);
-        root.left = node2;
-        root.right = node3;
-        node2.left = node4;
-        node2.right = node5;
-        node3.left = node6;
+        //前序遍历线索化验证
+        System.out.println("----------------");
+//        tree.preThreadedNode(root);// 1-3-8-10-6-14
+        //中序遍历线索化验证
+//        tree.infixThreadedNode(root);//8-3-10-1-14-6
+        //后续遍历线索化验证
+        tree.postThreadedNode(root);// 8-10-3-14-6-1
+        System.out.println(node8.left);
+        System.out.println(node8.right);
+        System.out.println(node10.left);
+        System.out.println(node10.right);
+        System.out.println(node14.left);
+        System.out.println(node14.right);
+        System.out.println(node6.right);
+
+        System.out.println("----------------");
     }
 
     static class ThreadedBinaryTree {
 
         Node root;
+        Node pre;
+
+        //      1
+        //  3       6
+        //8  10   14
+        //前序线索化
+        public void preThreadedNode(Node node) {
+            if (node == null) {
+                return;
+            }
+
+            if (node.left == null ) {//如果左子节点不存在
+                node.left = pre;
+                node.leftType = 1;
+            }
+
+            //处理上一个节点 pre的 后继节点
+            //如果是第一次操作,pre节点是空的,避免空指针
+            if (pre != null && pre.right == null) {
+                pre.right = node;
+                pre.rightType = 1;
+            }
+            pre = node;
+
+            //线索化左子节点
+            if (node.leftType == 0) {
+                preThreadedNode(node.left);
+            }
+            if (node.rightType == 0) {//如果最后一个节点的时候,必须判断,否则报错
+                //线索化右子节点
+                preThreadedNode(node.right);
+            }
+        }
+
+        //      1
+        //  3       6
+        //8  10   14
+        //中序线索化
+        public void infixThreadedNode(Node node) {
+            if (node == null) {
+                return;
+            }
+            //线索化左子节点
+            infixThreadedNode(node.left);
+
+
+            if (node.left == null) {//如果左子节点不存在
+                node.left = pre;
+                node.leftType = 1;
+            }
+
+            //处理上一个节点 pre的 后继节点
+            //如果是第一次操作,pre节点是空的,避免空指针
+            if (pre != null && pre.right == null) {
+                pre.right = node;
+                pre.rightType = 1;
+            }
+            pre = node;
+
+            //线索化右子节点
+            infixThreadedNode(node.right);
+        }
+
+        //      1
+        //  3       6
+        //8  10   14
+        //后序线索化
+        public void postThreadedNode(Node node) {
+            if (node == null) {
+                return;
+            }
+            //线索化左子节点
+            postThreadedNode(node.left);
+            //线索化右子节点
+            postThreadedNode(node.right);
+
+            if (node.left == null) {//如果左子节点不存在
+                node.left = pre;
+                node.leftType = 1;
+            }
+
+            //处理上一个节点 pre的 后继节点
+            //如果是第一次操作,pre节点是空的,避免空指针
+            if (pre != null && pre.right == null) {
+                pre.right = node;
+                pre.rightType = 1;
+            }
+            pre = node;
+
+
+        }
 
         public ThreadedBinaryTree(Node root) {
             this.root = root;
