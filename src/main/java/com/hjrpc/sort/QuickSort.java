@@ -21,7 +21,7 @@ public class QuickSort {
 
         long l2 = System.currentTimeMillis();
         int[] advanceArray2 = ArrayDataUtil.getAdvanceArray(8000000);
-        partitionSortOptimzed(advanceArray2, 0, advanceArray2.length - 1);
+        partitionSortOptimized(advanceArray2, 0, advanceArray2.length - 1);
         System.out.println("快速排序优化版本,共耗时:" + (System.currentTimeMillis() - l2));
         ArrayDataUtil.show(advanceArray2);
     }
@@ -47,7 +47,7 @@ public class QuickSort {
     public static void quickSortOptimized(int[] arr, int start, int end) {
         if (start < end) {
             ArrayDataUtil.swap(arr, start, random.nextInt(end - start + 1) + start);
-            int number = partitionSortOptimzed(arr, start, end);
+            int number = partitionSortOptimized(arr, start, end);
             //左分区，继续使用快速排序
             quickSortOptimized(arr, start, number - 1);
             //右分区，继续使用快速排序
@@ -55,7 +55,7 @@ public class QuickSort {
         }
     }
 
-    public static int partitionSortOptimzed(int[] arr, int start, int end) {
+    public static int partitionSortOptimized(int[] arr, int start, int end) {
         int pivotIndex = start;
         //中心点的值，设置第start个元素是基准值
         int pivotValue = arr[start];
