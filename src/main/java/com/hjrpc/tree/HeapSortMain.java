@@ -44,7 +44,7 @@ public class HeapSortMain {
 
 
     private static void heapSortOptimized(int[] arr) {
-        //构建一个大顶堆
+        //构建一个不完全的大顶堆
         for (int i = arr.length / 2 - 1; i >= 0; i--) {
             adjustHeapOptimized(arr, i, arr.length);
         }
