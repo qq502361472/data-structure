@@ -8,21 +8,22 @@ import java.util.*;
 public class HuffmanCode {
     public static void main(String[] args) {
 //        String source = "i like like like java do you like a java";
-//        //统计所有char出现的次数
-//        Map<Byte, Integer> map = countTimes(source);
-//        //根据统计的出现次数构建一个Huffman树
-//        Node root = generateHuffmanTreeNode(map);
-//        //根据Huffman树获取不重复的路径编码  左为0  右为1,即是编码表
-//        Map<Byte, String> huffmanCode = getHuffmanCode(root);
-//        //按照Huffman编码进行压缩,生成编码后字符串
-//        String code = zip(source, huffmanCode);
-//        System.out.println(code);
-//        System.out.println(code.length());
-//        //将字符串截取存储到byte[],一个byte可以存储8位
-//
-//        Byte[] bytes = convert(code);
-        System.out.println(Integer.parseInt("10011",2));
+        String source = "fdsafds afdsf dsfafdsgfdfsafdsa weew2131 32";
+        //统计所有char出现的次数
+        Map<Byte, Integer> map = countTimes(source);
+        //根据统计的出现次数构建一个Huffman树
+        Node root = generateHuffmanTreeNode(map);
+        //根据Huffman树获取不重复的路径编码  左为0  右为1,即是编码表
+        Map<Byte, String> huffmanCode = getHuffmanCode(root);
+        //按照Huffman编码进行压缩,生成编码后字符串
+        String code = zip(source, huffmanCode);
+        //我们需要记录编码后的长度，如果按照byte数组存储，最后一个byte有可能是0开头，这样就会丢失部分压缩后数据，导致不能解析
+        int len = code.length();
+        //将字符串截取存储到byte[],一个byte可以存储8位
+        Byte[] bytes = convert(code);
+        System.out.println(Arrays.toString(bytes));
     }
+
     /*
    1.java中变量都是以补码的形式保存的
    2.int 在java中是32位， byte是8位。
@@ -36,15 +37,16 @@ public class HuffmanCode {
         int len = (code.length() + (8 - 1)) / 8;
         Byte[] bytes = new Byte[len];
         int index = 0;
-        for (int i = 0; i < code.length(); i+=8) {
+        for (int i = 0; i < code.length(); i += 8) {
             String substring = null;
             //如果当前下标,再往后推7个数,即是包括自己一共8个元素,得到的下标,超过字符串长度,说明已经到最后一个字节了
             if (i + 7 > code.length() - 1) {
                 //最后一个字节,切割到最后
                 substring = code.substring(i);
+                System.out.println("最后一个串："+substring);
             } else {
                 //不是最后一个字节,都是满8位的
-                substring = code.substring(i, 8);
+                substring = code.substring(i, i + 8);
             }
             //将二进制字符串解析成Integer(32位,4个字节)
             int intVal = Integer.parseInt(substring, 2);
