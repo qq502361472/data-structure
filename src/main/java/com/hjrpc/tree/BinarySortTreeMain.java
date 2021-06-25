@@ -6,11 +6,20 @@ package com.hjrpc.tree;
 public class BinarySortTreeMain {
 
     public static void main(String[] args) {
-        int[] arr = {7, 3, 10, 12, 5, 1, 9};
+        int[] arr = {7, 3, 10, 12, 5, 1, 9, 2};
         BinarySortTree tree = new BinarySortTree();
         for (int i = 0; i < arr.length; i++) {
             tree.add(arr[i]);
         }
+
+//        tree.delete(2);
+//        tree.delete(1);
+//        tree.delete(5);
+//        tree.delete(9);
+//        tree.delete(12);
+        tree.delete(3);
+//        tree.delete(10);
+//        tree.delete(7);
         tree.infixOrder();
     }
 
@@ -39,11 +48,42 @@ public class BinarySortTreeMain {
                 } else {//当前节点是父节点的右子节点
                     parent.right = null;
                 }
-            }else if(node.left != null && node.right != null){//有两个子节点
-
-            }else {//如果当前节点只有一个子节点
-
+            } else if (node.left != null && node.right != null) {//有两个子节点
+                int cur = delAndGetLowerNode(node);
+                node.val = cur;
+            } else {//如果当前节点只有一个子节点
+                if (node.left != null) {
+                    if (parent == null) {
+                        root = node.left;
+                    } else {//只有左节点
+                        if (parent.left != null && parent.left.val == delVal) {
+                            parent.left = node.left;
+                        } else {
+                            parent.right = node.left;
+                        }
+                    }
+                } else {
+                    if (parent == null) {
+                        root = node.right;
+                    } else {//只有右节点
+                        if (parent.left != null && parent.left.val == delVal) {
+                            parent.left = node.right;
+                        } else {
+                            parent.right = node.right;
+                        }
+                    }
+                }
             }
+        }
+
+        private int delAndGetLowerNode(Node node) {
+            Node parent = node;
+            while (node.right != null) {
+                parent = node;
+                node = node.right;
+            }
+            parent.right = null;
+            return node.val;
         }
 
 
