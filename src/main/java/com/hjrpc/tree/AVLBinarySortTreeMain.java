@@ -2,10 +2,10 @@ package com.hjrpc.tree;
 
 public class AVLBinarySortTreeMain {
     public static void main(String[] args) {
-        int[] arr = {4, 3, 6, 5, 7, 8};
-//        int[] arr = {10, 12, 8, 9, 7, 6};
-//        int[] arr = {10,11, 7, 6, 8, 9};
-//        int[] arr = {2, 1, 6, 5, 7, 3};
+//        int[] arr = {4, 3, 6, 5, 7, 8};//左旋转
+//        int[] arr = {10, 12, 8, 9, 7, 6};//右旋转
+//        int[] arr = {10, 11, 7, 6, 8, 9};//右旋转,单其左子树的右子树高度大于左子树,先要对其左子树进行左旋
+        int[] arr = {2, 1, 6, 5, 7, 3};
 
         AVLBinarySortTree tree = new AVLBinarySortTree();
         for (int i = 0; i < arr.length; i++) {
@@ -166,23 +166,28 @@ public class AVLBinarySortTreeMain {
              */
             if (Math.abs(leftHeight() - rightHeight()) > 1) {
                 if (leftHeight() < rightHeight()) {//左边矮,右边高,左旋转
+                    if (right.leftHeight() > right.rightHeight()) {//右子树的左子树高度大于右子树,我们要给这个右子树右旋
+                        right.rightRotate();
+                    }
                     leftRotate();
-                }else{
+                } else {
+                    if (left.leftHeight() < left.rightHeight()) {//右子树的左子树高度大于右子树,我们要给这个右子树右旋
+                        left.leftRotate();
+                    }
                     rightRotate();
                 }
             }
         }
 
         /**
-         *       {4, 3, 6, 5, 7, 8}
-         *
-         *             4                       新节点:             6                     6
-         *           /   \                                       /  \                  /  \
-         *         3      6          6升级为root        4        5    7       =       4     7
-         *               /  \        =>左旋           /  \   +         \             / \     \
-         *              5    7                      3     5            8           3   5     8
-         *                    \
-         *                     8
+         * 数组{4, 3, 6, 5, 7, 8}
+         * |           4                       新节点:             6                     6
+         * |         /   \                                       /  \                  /  \
+         * |       3      6          6升级为root        4        5    7       =       4     7
+         * |             /  \        =>左旋           /  \   +         \             / \     \
+         * |            5    7                      3     5            8           3   5     8
+         * |                  \
+         * |                   8
          */
         private void leftRotate() {
             //创建一个左边的新节点
