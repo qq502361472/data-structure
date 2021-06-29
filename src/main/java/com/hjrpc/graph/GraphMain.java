@@ -1,8 +1,7 @@
 package com.hjrpc.graph;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
 
 public class GraphMain {
     public static void main(String[] args) {
@@ -29,6 +28,8 @@ public class GraphMain {
         graph.showBorders();
         System.out.print("图的深度遍历:");
         graph.dfs();
+        System.out.print("图的广度遍历:");
+        graph.bfs();
     }
 
     static class Graph {
@@ -36,6 +37,7 @@ public class GraphMain {
         int[][] borders;//边
         int borderSize;//边的数量
         boolean[] visited;
+        Queue<Integer> queue;
 
         /**
          * @param n 顶点的数量
@@ -45,6 +47,7 @@ public class GraphMain {
             borders = new int[n][n];
             this.borderSize = 0;
             visited = new boolean[n];
+            queue = new ArrayBlockingQueue<Integer>(n);
         }
 
         //边的数量
@@ -101,6 +104,7 @@ public class GraphMain {
                     dfs(i);
                 }
             }
+            System.out.println();
         }
 
         /**
@@ -167,13 +171,38 @@ public class GraphMain {
                     bfs(i);
                 }
             }
+            System.out.println();
         }
 
         /**
          * 图的广度遍历 breadth first search
          */
         private void bfs(int i) {
-
+            //输出当前节点
+            System.out.print(getValueByIndex(i) + "->");
+            //设置当前节点为已访问
+            visited[i] = true;
+            //第一个节点推入队列,这个节点已经被访问,保存等待其他同级节点访问完,然后再访问它的邻接结点
+            queue.add(i);
+            //只要队列中有元素就遍历
+            while (!queue.isEmpty()) {
+                //读取到上一个输出的结点
+                int u = queue.poll();
+                int w = getNeighbor(i);
+                //根据当前节点获取它的邻接结点
+                while (w != -1) {//如果w存在
+                    if (!visited[w]) {//当前节点未被访问过
+                        //输出当前节点
+                        System.out.print(getValueByIndex(w) + "->");
+                        //设置当前节点为已访问
+                        visited[w] = true;
+                        //将当前节点添加到队列中,当前队列就为上一个已访问的节点
+                        queue.add(w);
+                    }
+                    //获取u的邻接结点,其中w和0到w都已经被访问过了
+                    w = getNextNeighbour(u, w);
+                }
+            }
         }
     }
 }
