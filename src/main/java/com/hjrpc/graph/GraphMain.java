@@ -30,14 +30,15 @@ public class GraphMain {
         graph.dfs();
         System.out.print("图的广度遍历:");
         graph.bfs();
+        System.out.println(graph.borderSize());
     }
 
     static class Graph {
-        List<String> vertexes;//所有的顶点
-        int[][] borders;//边
-        int borderSize;//边的数量
-        boolean[] visited;
-        Queue<Integer> queue;
+        private List<String> vertexes;//所有的顶点
+        private int[][] borders;//边
+        private int borderSize;//边的数量
+        private boolean[] visited;
+        private Queue<Integer> queue;
 
         /**
          * @param n 顶点的数量
@@ -47,7 +48,7 @@ public class GraphMain {
             borders = new int[n][n];
             this.borderSize = 0;
             visited = new boolean[n];
-            queue = new ArrayBlockingQueue<Integer>(n);
+            queue = new ArrayBlockingQueue<>(n);
         }
 
         //边的数量
@@ -129,7 +130,7 @@ public class GraphMain {
         }
 
         /**
-         * 从w开始,获取i的邻接结点
+         * 从w开始,获取i的邻接结点,w和w之前的节点不需要访问
          *
          * @param i
          * @param w
