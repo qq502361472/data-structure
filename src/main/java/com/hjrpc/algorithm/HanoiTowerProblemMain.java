@@ -6,7 +6,7 @@ package com.hjrpc.algorithm;
 public class HanoiTowerProblemMain {
     static int times=0;
     public static void main(String[] args) {
-        playHanoiTower(3, 'A', 'B', 'C');
+        playHanoiTower(26, 'A', 'B', 'C');
         System.out.println(times);
     }
 
