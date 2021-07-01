@@ -19,9 +19,9 @@ public class KnapsackProblem {
         int num = price.length;
 
         //获取具体放入了哪个物品
-        int[][] path = new int[price.length + 1][knapsackCapacity + 1];
+        int[][] path = new int[num + 1][knapsackCapacity + 1];
 
-        int[][] v = new int[price.length + 1][knapsackCapacity + 1];
+        int[][] v = new int[num + 1][knapsackCapacity + 1];
         //默认第0行第0列都为0
         for (int i = 1; i < v.length; i++) {
             for (int j = 1; j < v[i].length; j++) {
@@ -64,7 +64,8 @@ public class KnapsackProblem {
                 System.out.printf("放入物品" + names[i - 1] + ",价值[%d]重量[%d]\n", price[i - 1], weight[i - 1]);
                 j = j - weight[i - 1];
             }
-            //切记放在if外面,因为,有可能没有找到放入物品,那么我们就往上看放入物品的记录
+            // 切记放在if外面,因为有可能没有找到放入物品,那么我们就往上看放入物品的记录
+            // 如果没有放入物品,那个值是从上面复制下来的,一直往上找就可以了
             i--;
         }
     }
