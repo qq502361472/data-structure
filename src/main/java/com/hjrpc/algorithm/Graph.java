@@ -28,7 +28,7 @@ class Graph {
         borderSize++;
     }
 
-    private int getIndex(char ch) {
+    public int getIndex(char ch) {
         for (int i = 0; i < vertexes.length; i++) {
             if (vertexes[i] == ch) {
                 return i;
