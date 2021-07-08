@@ -31,7 +31,6 @@ public class PrimAlgorithmMain {
         graph.addBorder('G', 'F', 6);
         graph.addBorder('E', 'F', 5);
         graph.addBorder('D', 'F', 4);
-
         graph.updateNoBorderValue(Integer.MAX_VALUE);
         graph.show();
 
