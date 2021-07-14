@@ -46,7 +46,7 @@ public class DijkstraAlgorithmMain {
     }
 
     //代表不通的路
-    static final int INF = Integer.MAX_VALUE - 500;
+    static final int INF = Byte.MAX_VALUE;
     //图
     static Graph graph;
     //节点是否被访问过

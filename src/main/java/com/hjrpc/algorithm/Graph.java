@@ -55,13 +55,14 @@ class Graph {
 
     /**
      * 设置不连通的顶点权值为指定值,这里包含顶点和顶点自己的连线
+     *
      * @param maxValue
      */
     public void updateNoBorderValue(int maxValue) {
         this.noBorderVal = maxValue;
         for (int i = 0; i < weight.length; i++) {
             for (int j = 0; j < weight[i].length; j++) {
-                if (weight[i][j] == 0) {
+                if (weight[i][j] == 0 && i != j) {
                     weight[i][j] = noBorderVal;
                 }
             }
