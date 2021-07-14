@@ -71,7 +71,7 @@ public class DijkstraAlgorithmMain {
         visited[index] = true;
         //遍历顶点v到各个节点的边,即是graph.weight[index],更新dis和preNode
         for (int i = 0; i < graph.weight[index].length; i++) {
-            int cur = i == index ? 0 : graph.weight[index][i];
+            int cur = graph.weight[index][i];
             //初始化dis数组的值
             dis[i] = cur;
             //设置当前节点的前驱节点为节点v的下标
@@ -91,7 +91,7 @@ public class DijkstraAlgorithmMain {
         int newIndex = getNewIndex();
         //设置当前顶点为已访问
         visited[newIndex] = true;
-        //起点到前驱节点的距离
+        //起点到新顶点的距离
         int preDis = dis[newIndex];
         //遍历新顶点v到各个节点的边,即是graph.weight[index],更新dis和preNode
         for (int i = 0; i < graph.weight[newIndex].length; i++) {
