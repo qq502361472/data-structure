@@ -1,7 +1,9 @@
 package com.hjrpc.algorithm;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Stack;
+import java.util.Collections;
+import java.util.List;
 
 public class FloydAlgorithmMain {
     //图
@@ -45,18 +47,20 @@ public class FloydAlgorithmMain {
         int f = graph.getIndex(from);
         int t = graph.getIndex(to);
         System.out.println("最短路径长度{" + dis[f][t] + "}");
-        Stack<Integer> stack = new Stack<>();
-        stack.add(t);
+        //倒叙储存经过的前驱节点
+        List<Character> list = new ArrayList<>();
+        //从后往前遍历,先往堆中放入最后一个节点
+        list.add(to);
         int temp = t;
+        //直到到达起点时停止
         while (temp != f) {
+            //获取从起点到上一个节点的前驱节点
             temp = pre[f][temp];
-            stack.add(temp);
+            list.add(graph.vertexes[temp]);
         }
-        while (!stack.isEmpty()){
-            Integer pop = stack.pop();
-            System.out.print(graph.vertexes[pop]+"->");
-        }
-        System.out.println();
+        //因为是反过来放进去的,这里反转一下集合
+        Collections.reverse(list);
+        System.out.println(list);
     }
 
     private static void floyd() {
